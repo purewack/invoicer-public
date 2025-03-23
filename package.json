@@ -1,0 +1,20 @@
+{
+  "name": "invoicer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker compose up",
+    "build": "docker compose build",
+    "dev:build": "docker compose -f docker-compose.dev.yaml build",
+    "dev:db:build": "docker compose -f docker-compose.dev-db.yaml build",
+    "dev:stop": "docker compose -f docker-compose.dev.yaml down",
+    "dev": "CURRENT_UID=$(id -u):$(id -g) docker compose -f docker-compose.dev.yaml up --build",
+    "dev:db": "docker compose -f docker-compose.dev-db.yaml up --build"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

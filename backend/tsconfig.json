@@ -1,0 +1,39 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "removeComments": false,
+        "sourceMap": true,
+        "target": "ES2018",
+        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "jsx": "react-jsx",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "experimentalDecorators":true,
+        "types": [
+            "node"
+        ],
+        "baseUrl": "./",
+        "paths": {
+            "@/*": [
+                "./*"
+            ],
+            "@shared/*": [
+                "./shared/*"
+            ],
+            "@keys/*": [
+                "./keys/*",
+                "../*"
+            ]
+        },
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx"
+, "env.js"    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "niklas-front",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "@vueuse/components": "^13.3.0",
+    "@vueuse/core": "^13.1.0",
+    "axios": "^1.8.4",
+    "firebase": "^11.9.0",
+    "remult": "^2.7.33",
+    "short-uuid": "^5.2.0",
+    "uuid": "^11.1.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@mdi/font": "^7.4.47",
+    "@tailwindcss/vite": "^4.0.13",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "@vue/babel-plugin-jsx": "^1.4.0",
+    "@vue/runtime-core": "^3.5.13",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^8.2.2",
+    "leaflet": "^1.9.4",
+    "postcss": "^8.5.3",
+    "prettier": "3.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.1",
+    "vite-plugin-vue-devtools": "^7.7.2",
+    "vuetify": "^3.9.5"
+  }
+}

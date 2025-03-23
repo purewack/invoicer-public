@@ -1,0 +1,59 @@
+services:
+
+  backend:
+    user: ${CURRENT_UID}
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+      - ./firebase-admin-key.json:/app/keys/firebase-admin-key.json
+      - ./local.emails:/app/emails
+    command: sh -c "npm run dev"
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3002:3002"
+    networks:
+      - dev-net
+    restart: unless-stopped
+    healthcheck:
+      test: [
+        "CMD", "node", "-e",
+        "require('http').request(
+          {
+            hostname: 'localhost',
+            port: 3002,
+            path: '/api/health',
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          },
+          (res) => process.exit(res.statusCode === 200 ? 0 : 1)
+        )
+        .on('error', () => process.exit(1))
+        .end(JSON.stringify({}))"
+      ]
+      interval: 1s
+      timeout: 10s
+      retries: 5
+
+  frontend:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - ./backend/shared:/app/shared
+      - ./firebase-user-key.json:/app/keys/firebase-user-key.json
+    command: sh -c "npm run dev"
+    environment:
+      - VITE_BACKEND_HOST=backend:3002
+    ports:
+      - "80:5173"
+    networks:
+      - dev-net
+    depends_on:
+      backend:
+        condition: service_healthy
+
+networks:
+  dev-net:
+    driver: bridge

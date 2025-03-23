@@ -1,0 +1,85 @@
+services:
+  db:
+    image: postgres
+    env_file:
+      - ./.env.dev
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASS}
+    expose:
+      - 5432
+    ports:
+      - "33002:5432"
+    volumes:
+      - ./.db-persistent-dev:/var/lib/postgresql/data 
+    networks:
+      - dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+      - ./.db-json:/app/db
+      - ./firebase-admin-key.json:/app/keys/firebase-admin-key.json
+    command: sh -c "npm run dev"
+    env_file:
+      - ./.env.dev
+    environment:
+      - NODE_ENV=development
+      - DB_URL=postgres://postgres:${DB_PASS}@${DB_HOST}:5432
+    ports:
+      - "3002:3002"
+    networks:
+      - dev-network
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+    healthcheck:
+      test: [
+        "CMD", "node", "-e",
+        "require('http').request(
+          {
+            hostname: 'localhost',
+            port: 3002,
+            path: '/api/health',
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          },
+          (res) => process.exit(res.statusCode === 200 ? 0 : 1)
+        )
+        .on('error', () => process.exit(1))
+        .end(JSON.stringify({}))"
+      ]
+      interval: 1s
+      timeout: 10s
+      retries: 5
+
+  frontend:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - ./backend/shared:/app/shared
+      - ./firebase-user-key.json:/app/keys/firebase-user-key.json
+    command: sh -c "npm run dev"
+    environment:
+      - VITE_BACKEND_HOST=backend:3002
+    env_file:
+      - ./.env.dev
+    ports:
+      - "5173:5173"
+    networks:
+      - dev-network
+    depends_on:
+      backend:
+        condition: service_healthy
+
+networks:
+  dev-network:
+    driver: bridge

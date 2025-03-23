@@ -1,0 +1,9 @@
+node_modules
+package-lock.json
+.db-*
+.rsyncignore
+.vscode
+.env
+.env.dev
+docker-compose.dev*
+local.*

@@ -1,0 +1,49 @@
+{
+    "x_job_item_titles": [
+        {
+            "title": "Window Cleaning",
+            "cycle": 1,
+            "category": ["windows"],
+            "detail": "Initial cleaning requires more work resulting in a higher one time price. Please note, we are not able to clean fat/oil/paint/cement off the frame or sills."
+        },
+        {
+            "title": "Gutter Cleaning",
+            "cycle": 12,
+            "category": ["gutters","gutters-package"],
+            "detail": "Price includes clearing all gutters at your property, and photographic evidence of completed work on request. We also provide minor gutter fixes starting from £25.00"
+        },
+        {
+            "title": "Soffit & Fascias Cleaning",
+            "cycle": 12,
+            "category": ["soffits","gutters-package"],
+            "detail": ""
+        },
+        {
+            "title": "UPVC & Door Cleaning",
+            "category": ["gutters-package"],
+            "detail": ""
+        },
+        {
+            "title": "Conservatory Roof Cleaning",
+            "detail": ""
+        },
+        {
+            "title": "Solar Panel Cleaning",
+            "detail": ""
+        },
+        {
+            "title": "Pressure Washing",
+            "detail": ""
+        },
+        {
+            "title": "Glass Balustrade / Balcony",
+            "detail": "price includes cleaning both sides"
+        },
+        {
+            "title": "Interior Window Cleaning",
+            "cycle": 2,
+            "category": ["interior"],
+            "detail": ""
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+.env
+.env.dev
+.env.development
+local.*
+node_modules
+.db
+.db-*
+*-key.json
+*.key

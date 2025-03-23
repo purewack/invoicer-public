@@ -1,0 +1,46 @@
+services:
+  db:
+    build:
+      context: ./db
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASS}
+    expose:
+      - 5432
+    ports:
+      - "33002:5432"
+    volumes:
+      - ./.db-persistent:/var/lib/postgresql/data 
+      - ./.db-backups:/backup
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: 
+      context: .
+      dockerfile: ./backend/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - DB_URL=postgres://postgres:${DB_PASS}@${DB_HOST}:5432
+    env_file:
+      - ./.env
+    ports:
+      - "${PROD_PORT}:${PROD_PORT}"
+    expose:
+      - ${PROD_PORT}
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+    
+
+networks:
+  app-network:
+    driver: bridge
