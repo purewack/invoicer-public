@@ -68,7 +68,7 @@ async function main(){
     })
   })
 
-  if(!isDev()){
+  // if(!isDev()){
     app.use(express.static(path.join(__dirname, "public")));
 
     app.get("*", (req, res, next) => {
@@ -76,9 +76,10 @@ async function main(){
       if (req.path.includes(".")) return next();
       res.sendFile(path.join(__dirname, "public", "index.html"));
     });
-  }
-  const server = app.listen(process.env.PROD_PORT || 3002, async ()=>{
-    console.log("ready")
+  // }
+  const port = process.env.PORT || process.env.PROD_PORT || 3002;
+  const server = app.listen(port, async ()=>{
+    console.log(`ready on port ${port}`)
   })
 }
 

@@ -1,0 +1,29 @@
+# Node
+**/node_modules
+**/npm-debug.log
+**/.pnp
+.pnp.js
+
+# Build outputs
+frontend/dist
+backend/public
+
+# Git and editor files
+.git
+.gitignore
+.vscode
+
+# Local data and secrets (adjust as needed)
+local.emails
+db/
+keys/
+*.pem
+*.key
+
+# Avoid large files
+*.sqlite
+*.db
+
+# Docker files
+Dockerfile*
+.dockerignore
